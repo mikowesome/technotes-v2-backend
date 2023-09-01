@@ -1,14 +1,9 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { PrismaModule } from './prisma/prisma.module';
-import { GlobalPrefixMiddleware } from 'middlewares/global-prefix.middleware';
+import { UsersModule } from './users/users.module';
+import { NotesModule } from './notes/notes.module';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [PrismaModule, UsersModule, NotesModule],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(GlobalPrefixMiddleware)
-      .forRoutes('*'); // Apply the middle for all routes
-  }
-}
+export class AppModule{}

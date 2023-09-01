@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { corsOptions } from 'config/corsOptions';
 
 async function bootstrap() {
@@ -8,6 +8,9 @@ async function bootstrap() {
 
   // Enables CORS for our api
   app.enableCors(corsOptions)
+
+  // Sets base path for all routes to /api/v1
+  app.setGlobalPrefix('api/v1');
 
   app.useGlobalPipes(
     new ValidationPipe({
