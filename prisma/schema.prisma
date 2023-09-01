@@ -9,3 +9,31 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id    String @id @default(uuid())
+  username  String
+  password  String
+  userType  UserType @default(EMPLOYEE)
+  isActive  Boolean @default(true)
+
+  notes   Note[]
+}
+
+model Note {
+  id    String @id @default(uuid())
+  noteId  Int @default(autoincrement())
+  userId  String
+  user    User @relation(fields: [userId], references: [id])
+  title   String
+  text    String
+  completed Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum UserType {
+  EMPLOYEE
+  MANAGER
+  ADMIN
+}
